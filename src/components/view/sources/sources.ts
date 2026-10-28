@@ -31,8 +31,8 @@ class Sources implements Sources {
                 if (sourceCloneTemp) {
                     const sourceClone: HTMLEl = sourceCloneTemp.querySelector('.source__item-name');
                     if (sourceClone) sourceClone.textContent = item.name;
-                    sourceClone?.setAttribute('data-source-id', item.id);
-                    fragment.append(sourceClone as HTMLElement);
+                    sourceCloneTemp.querySelector('.source__item')?.setAttribute('data-source-id', item.id);
+                    fragment.append(sourceCloneTemp);
                 }
             });
         }
