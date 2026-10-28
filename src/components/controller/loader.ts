@@ -1,4 +1,4 @@
-interface Loader {
+interface ILoader {
     baseLink: string;
     options: object;
     getResp(options: Resp, callback: Callback): void;
@@ -8,7 +8,7 @@ interface Loader {
 
 type Resp = {
     endpoint: string;
-    options: object;
+    options?: URLOptions;
 };
 
 type Callback = (data?: string) => void;
@@ -17,7 +17,9 @@ type URLOptions = {
     [key: string]: string;
 };
 
-class Loader implements Loader {
+class Loader implements ILoader {
+    public baseLink: string;
+    public options: object;
     constructor(baseLink: string, options: object) {
         this.baseLink = baseLink;
         this.options = options;
