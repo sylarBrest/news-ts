@@ -10,13 +10,18 @@ const baseConfig = {
     module: {
         rules: [
             {
+                test: /\.tsx?$/,
+                exclude: /node_modules/,
+                loader: 'ts-loader',
+            },
+            {
                 test: /\.css$/i,
                 use: ['style-loader', 'css-loader'],
             },
         ],
     },
     resolve: {
-        extensions: ['.js'],
+        extensions: ['.ts', '.js'],
     },
     output: {
         filename: 'index.js',
