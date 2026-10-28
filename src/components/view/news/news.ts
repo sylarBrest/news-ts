@@ -1,6 +1,6 @@
 import './news.css';
 
-interface News {
+interface INews {
     draw(data: DataArray): void;
 }
 
@@ -24,7 +24,7 @@ type Data = {
 
 type HTMLEl = HTMLElement | null;
 
-class News implements News {
+class News implements INews {
     public draw(data: DataArray) {
         const news = data.length >= 10 ? data.filter((_item: Data, idx: number) => idx < 10) : data;
 

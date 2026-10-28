@@ -1,6 +1,6 @@
 import './sources.css';
 
-interface Sources {
+interface ISources {
     draw(data: DataArray): void;
 }
 
@@ -18,7 +18,7 @@ type Data = {
 
 type HTMLEl = HTMLElement | null;
 
-class Sources implements Sources {
+class Sources implements ISources {
     public draw(data: DataArray) {
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLEl = document.querySelector('#sourceItemTemp');
