@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const DotenvWebpackPlugin = require('dotenv-webpack');
 
 const baseConfig = {
-    entry: path.resolve(__dirname, './src/index.ts'),
+    entry: path.resolve(__dirname, './src/index.js'),
     mode: 'development',
     module: {
         rules: [

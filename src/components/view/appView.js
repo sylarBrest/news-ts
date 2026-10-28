@@ -1,10 +1,10 @@
 import News from './news/news';
 import Sources from './sources/sources';
 
-interface AppView {
+/* interface AppView {
     drawNews(data: object): void;
     drawSources(data: object): void;
-}
+} */
 
 class AppView {
     constructor() {
