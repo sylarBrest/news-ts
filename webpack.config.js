@@ -13,6 +13,11 @@ const baseConfig = {
                 test: /\.tsx?$/,
                 exclude: /node_modules/,
                 loader: 'ts-loader',
+                options: {
+                    compilerOptions: {
+                        noEmit: false, // <-- Явно разрешаем ts-loader генерировать JS
+                    },
+                },
             },
             {
                 test: /\.css$/i,
