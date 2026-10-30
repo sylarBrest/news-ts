@@ -1,58 +1,45 @@
-import type { Resp, Callback, URLOptions } from '../types/types';
+import type { Resp, Callback, URLOptions, Data } from '../types/types';
+import { HttpMethod } from '../types/types';
 
-interface ILoader {
-  baseLink: string;
-  options: URLOptions;
-  getResp(options: Resp, callback: Callback): void;
-  errorHandler(res: Response): Response;
-  makeUrl(options: object, endpoint: string): string;
-  load(method: string, endpoint: string, callback: Callback, options: URLOptions): void;
-}
-
-class Loader implements ILoader {
-  public baseLink: string;
-  public options: URLOptions;
-  constructor(baseLink: string, options: URLOptions) {
+class Loader {
+  private readonly baseLink: string;
+  private readonly options: URLOptions;
+  constructor(baseLink: string, options: URLOptions = {}) {
     this.baseLink = baseLink;
     this.options = options;
   }
 
-  public getResp(
-    { endpoint, options = {} }: Resp,
-    callback: Callback = () => {
-      console.error('No callback for GET response');
-    },
-  ): void {
-    this.load('GET', endpoint, callback, options);
+  public getResp({ endpoint, options = {} }: Resp, callback: Callback): void {
+    this.load(HttpMethod.GET, endpoint, callback, options);
   }
 
-  public errorHandler(res: Response): Response {
+  private errorHandler = (res: Response): Response => {
     if (!res.ok) {
-      if (res.status === 401 || res.status === 404)
-        console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
-      throw Error(res.statusText);
+      if (res.status === 401 || res.status === 404) {
+        throw new Error(`Auth/not found: ${res.status} ${res.statusText}`);
+      }
+      throw new Error(`HTTP ${res.status}${res.statusText ? ` ${res.statusText}` : ''}`);
     }
 
     return res;
+  };
+
+  private makeUrl(queryOptions: URLOptions, endpoint: string): string {
+    const params = new URLSearchParams({ ...this.options, ...queryOptions }).toString();
+    const url = `${this.baseLink}${endpoint}${params ? `?${params}` : ''}`;
+
+    return url;
   }
 
-  public makeUrl(options: object, endpoint: string): string {
-    const urlOptions: URLOptions = { ...this.options, ...options };
-    let url = `${this.baseLink}${endpoint}?`;
-
-    Object.keys(urlOptions).forEach((key: string) => {
-      url += `${key}=${urlOptions[key]}&`;
-    });
-
-    return url.slice(0, -1);
-  }
-
-  public load(method: string, endpoint: string, callback: Callback, options: URLOptions = {}): void {
+  private load(method: HttpMethod, endpoint: string, callback: Callback, options: URLOptions = {}): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
-      .then((res: Response) => res.json())
-      .then((data: string) => callback(data))
-      .catch((err: Error) => console.error(err));
+      .then((res: Response): Promise<Data> => res.json())
+      .then((data: Data) => callback(data))
+      .catch((err: unknown) => {
+        const errorMessage = err instanceof Error ? err.message : String(err);
+        console.error(errorMessage);
+      });
   }
 }
 

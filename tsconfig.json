@@ -8,6 +8,7 @@
     "forceConsistentCasingInFileNames": true,
     "noUncheckedIndexedAccess": true,
     "noImplicitOverride": true,
+    "strict": true,
     "exactOptionalPropertyTypes": true,
     "verbatimModuleSyntax": true,
     "noFallthroughCasesInSwitch": true,

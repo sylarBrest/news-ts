@@ -40,6 +40,14 @@ export type Resp = {
   options?: URLOptions;
 };
 
-export type Callback = (data?: Data | string) => void;
+export type Callback = (data: Data) => void;
 
 export type URLOptions = Record<string, string>;
+
+export enum HttpMethod {
+  GET = 'GET',
+  POST = 'POST',
+  PUT = 'PUT',
+  PATCH = 'PATCH',
+  DELETE = 'DELETE',
+}
