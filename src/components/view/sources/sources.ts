@@ -1,29 +1,29 @@
 import './sources.css';
-import type { HTMLEl, SourceDataArray } from '../../types/types';
+import type { SourceDataArray } from '../../types/types';
 
 interface ISources {
   draw(data: SourceDataArray): void;
 }
 
 class Sources implements ISources {
-  public draw(data: SourceDataArray) {
-    const fragment: DocumentFragment = document.createDocumentFragment();
-    const sourceItemTemp: HTMLEl = document.querySelector('#sourceItemTemp');
+  public draw(data: SourceDataArray): void {
+    const fragment = document.createDocumentFragment();
+    const sourceItemTemp = document.querySelector<HTMLTemplateElement>('#sourceItemTemp');
 
     if (sourceItemTemp) {
-      const sourceItem: HTMLTemplateElement = sourceItemTemp as HTMLTemplateElement;
-
       data.forEach((item) => {
-        const sourceCloneTemp: HTMLTemplateElement = sourceItem.content.cloneNode(true) as HTMLTemplateElement;
-        if (sourceCloneTemp) {
-          const sourceClone: HTMLEl = sourceCloneTemp.querySelector('.source__item-name');
-          if (sourceClone) sourceClone.textContent = item.name;
-          sourceCloneTemp.querySelector('.source__item')?.setAttribute('data-source-id', item.id);
-          fragment.append(sourceCloneTemp);
-        }
+        const sourceClone = sourceItemTemp.content.cloneNode(true) as DocumentFragment;
+
+        const itemNameElement = sourceClone.querySelector<HTMLElement>('.source__item-name');
+        if (itemNameElement) itemNameElement.textContent = item.name;
+
+        const itemElement = sourceClone.querySelector<HTMLElement>('.source__item');
+        if (itemElement) itemElement.setAttribute('data-source-id', item.id);
+
+        fragment.append(sourceClone);
       });
     }
-    document.querySelector('.sources')?.append(fragment);
+    document.querySelector<HTMLElement>('.sources')?.append(fragment);
   }
 }
 
