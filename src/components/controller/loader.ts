@@ -1,8 +1,8 @@
-import { Resp, Callback, URLOptions } from '../types/types';
+import type { Resp, Callback, URLOptions } from '../types/types';
 
 interface ILoader {
     baseLink: string;
-    options: object;
+    options: URLOptions;
     getResp(options: Resp, callback: Callback): void;
     errorHandler(res: Response): Response;
     makeUrl(options: object, endpoint: string): string;
@@ -11,8 +11,8 @@ interface ILoader {
 
 class Loader implements ILoader {
     public baseLink: string;
-    public options: object;
-    constructor(baseLink: string, options: object) {
+    public options: URLOptions;
+    constructor(baseLink: string, options: URLOptions) {
         this.baseLink = baseLink;
         this.options = options;
     }

@@ -1,5 +1,5 @@
 import AppLoader from './appLoader';
-import { Callback } from '../types/types';
+import type { Callback } from '../types/types';
 
 interface IAppController {
     getSources(callback: Callback): void;

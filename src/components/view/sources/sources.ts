@@ -1,5 +1,5 @@
 import './sources.css';
-import { HTMLEl, SourceDataArray } from '../../types/types';
+import type { HTMLEl, SourceDataArray } from '../../types/types';
 
 interface ISources {
     draw(data: SourceDataArray): void;

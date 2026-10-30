@@ -1,6 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import { Data, NewsDataArray, SourceDataArray } from '../types/types';
+import type { Data, NewsDataArray, SourceDataArray } from '../types/types';
 
 interface IAppView {
     news: News;

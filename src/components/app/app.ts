@@ -1,6 +1,6 @@
 import AppController from '../controller/controller';
 import AppView from '../view/appView';
-import { Data } from '../types/types';
+import type { Data } from '../types/types';
 
 interface IApp {
     controller: AppController;

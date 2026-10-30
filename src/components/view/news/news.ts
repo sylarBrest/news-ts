@@ -1,5 +1,5 @@
 import './news.css';
-import { HTMLEl, NewsData, NewsDataArray } from '../../types/types';
+import type { HTMLEl, NewsData, NewsDataArray } from '../../types/types';
 
 interface INews {
     draw(data: NewsDataArray): void;
