@@ -1,4 +1,4 @@
-export type NewsDataArray = [data: NewsData];
+export type NewsDataArray = NewsData[];
 
 export type NewsData = {
     author: string;
@@ -14,7 +14,7 @@ export type NewsData = {
     urlToImage: string;
 };
 
-export type SourceDataArray = readonly [data: Pick<SourceData, 'id' | 'name'>];
+export type SourceDataArray = ReadonlyArray<Pick<SourceData, 'id' | 'name'>>;
 
 export type SourceData = {
     category: string;
@@ -42,6 +42,4 @@ export type Resp = {
 
 export type Callback = (data?: Data | string) => void;
 
-export type URLOptions = {
-    [key: string]: string;
-};
+export type URLOptions = Record<string, string>;
