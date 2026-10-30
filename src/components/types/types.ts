@@ -45,8 +45,6 @@ type ErrorResp = {
 
 export type Data = OkNews | OkSources | ErrorResp;
 
-export type HTMLEl = HTMLElement | null;
-
 export type Resp = {
   endpoint: string;
   options?: URLOptions;
