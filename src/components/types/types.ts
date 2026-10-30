@@ -1,4 +1,4 @@
-export type NewsDataArray = readonly [data: NewsData];
+export type NewsDataArray = [data: NewsData];
 
 export type NewsData = {
     author: string;
