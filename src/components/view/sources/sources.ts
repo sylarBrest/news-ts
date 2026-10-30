@@ -7,7 +7,6 @@ interface ISources {
 
 class Sources implements ISources {
     public draw(data: SourceDataArray) {
-        console.log(data);
         const fragment: DocumentFragment = document.createDocumentFragment();
         const sourceItemTemp: HTMLEl = document.querySelector('#sourceItemTemp');
 
