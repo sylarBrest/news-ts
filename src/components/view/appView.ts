@@ -1,30 +1,23 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import type { Data, NewsDataArray, SourceDataArray } from '../types/types';
+import type { Data } from '../types/types';
 
-interface IAppView {
-  news: News;
-  sources: Sources;
-  drawNews(data: Data): void;
-  drawSources(data: Data): void;
-}
-
-class AppView implements IAppView {
-  public news: News;
-  public sources: Sources;
+class AppView {
+  private news: News;
+  private sources: Sources;
   constructor() {
     this.news = new News();
     this.sources = new Sources();
   }
 
-  public drawNews(data: Data) {
-    const values = data?.articles ? data?.articles : [];
-    this.news.draw(values as NewsDataArray);
+  public drawNews(data: Data): void {
+    if (!('articles' in data)) return;
+    this.news.draw(data.articles);
   }
 
-  public drawSources(data: Data) {
-    const values = data?.sources ? data?.sources : [];
-    this.sources.draw(values as SourceDataArray);
+  public drawSources(data: Data): void {
+    if (!('sources' in data)) return;
+    this.sources.draw(data.sources);
   }
 }
 

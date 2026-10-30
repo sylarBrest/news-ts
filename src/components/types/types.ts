@@ -26,12 +26,24 @@ export type SourceData = {
   url: string;
 };
 
-export type Data = {
-  status: string;
-  articles?: NewsDataArray;
-  totalResults?: number;
-  sources?: SourceDataArray;
+type OkNews = {
+  status: 'ok';
+  articles: NewsDataArray;
+  totalResults: number;
 };
+
+type OkSources = {
+  status: 'ok';
+  sources: SourceDataArray;
+};
+
+type ErrorResp = {
+  status: 'error';
+  code: string;
+  message: string;
+};
+
+export type Data = OkNews | OkSources | ErrorResp;
 
 export type HTMLEl = HTMLElement | null;
 

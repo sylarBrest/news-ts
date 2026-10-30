@@ -35,7 +35,12 @@ class Loader {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
       .then((res: Response): Promise<Data> => res.json())
-      .then((data: Data) => callback(data))
+      .then((data: Data) => {
+        if (data.status !== 'ok') {
+          throw new Error(`API error: ${data.status}`);
+        }
+        callback(data);
+      })
       .catch((err: unknown) => {
         const errorMessage = err instanceof Error ? err.message : String(err);
         console.error(errorMessage);
