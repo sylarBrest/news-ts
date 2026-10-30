@@ -67,7 +67,7 @@ footer {
 }
 
 .rss-logo {
-    background: url('rss-logo.svg');
+    background: url('img/rss-logo.svg');
     background-repeat: no-repeat;
     background-size: contain;
     transition: 0.25s;
