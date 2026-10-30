@@ -1,7 +1,11 @@
 import AppController from '../controller/controller';
 import AppView from '../view/appView';
 
-class App {
+interface IApp {
+  start(): void;
+}
+
+class App implements IApp {
   private readonly controller: AppController;
   private readonly view: AppView;
 

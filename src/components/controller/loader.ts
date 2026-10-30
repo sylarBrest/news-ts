@@ -1,9 +1,14 @@
 import type { Resp, Callback, URLOptions, Data } from '../types/types';
 import { HttpMethod } from '../types/types';
 
-class Loader {
+interface ILoader {
+  getResp<T extends Data = Data>({ endpoint, options }: Resp, callback: Callback<T>): void;
+}
+
+class Loader implements ILoader {
   private readonly baseLink: string;
   private readonly options: URLOptions;
+
   constructor(baseLink: string, options: URLOptions = {}) {
     this.baseLink = baseLink;
     this.options = options;

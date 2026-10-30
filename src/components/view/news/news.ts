@@ -6,7 +6,7 @@ interface INews {
 }
 
 class News implements INews {
-  public draw(data: NewsDataArray) {
+  public draw(data: NewsDataArray): void {
     const news = data.length >= 10 ? data.filter((_item, idx) => idx < 10) : data;
 
     const fragment = document.createDocumentFragment();

@@ -1,7 +1,12 @@
 import AppLoader from './appLoader';
 import type { Callback, OkNews, OkSources } from '../types/types';
 
-class AppController extends AppLoader {
+interface IAppController {
+  getSources(callback: Callback<OkSources>): void;
+  getNews(e: Event, callback: Callback<OkNews>): void;
+}
+
+class AppController extends AppLoader implements IAppController {
   public getSources(callback: Callback<OkSources>): void {
     this.getResp<OkSources>({ endpoint: 'sources' }, callback);
   }
