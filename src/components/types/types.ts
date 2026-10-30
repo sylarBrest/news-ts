@@ -26,18 +26,18 @@ export type SourceData = {
   url: string;
 };
 
-type OkNews = {
+export type OkNews = {
   status: 'ok';
   articles: NewsDataArray;
   totalResults: number;
 };
 
-type OkSources = {
+export type OkSources = {
   status: 'ok';
   sources: SourceDataArray;
 };
 
-type ErrorResp = {
+export type ErrorResp = {
   status: 'error';
   code: string;
   message: string;
@@ -50,7 +50,7 @@ export type Resp = {
   options?: URLOptions;
 };
 
-export type Callback = (data: Data) => void;
+export type Callback<T extends Data = Data> = (data: T) => void;
 
 export type URLOptions = Record<string, string>;
 

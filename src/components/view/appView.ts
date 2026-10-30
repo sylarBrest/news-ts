@@ -1,6 +1,6 @@
 import News from './news/news';
 import Sources from './sources/sources';
-import type { Data } from '../types/types';
+import type { OkNews, OkSources } from '../types/types';
 
 class AppView {
   private readonly news: News;
@@ -10,13 +10,11 @@ class AppView {
     this.sources = new Sources();
   }
 
-  public drawNews(data: Data): void {
-    if (!('articles' in data)) return;
+  public drawNews(data: OkNews): void {
     this.news.draw(data.articles);
   }
 
-  public drawSources(data: Data): void {
-    if (!('sources' in data)) return;
+  public drawSources(data: OkSources): void {
     this.sources.draw(data.sources);
   }
 }

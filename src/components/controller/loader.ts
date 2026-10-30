@@ -9,8 +9,8 @@ class Loader {
     this.options = options;
   }
 
-  public getResp({ endpoint, options = {} }: Resp, callback: Callback): void {
-    this.load(HttpMethod.GET, endpoint, callback, options);
+  public getResp<T extends Data = Data>({ endpoint, options = {} }: Resp, callback: Callback<T>): void {
+    this.load<T>(HttpMethod.GET, endpoint, callback, options);
   }
 
   private readonly errorHandler = (res: Response): Response => {
@@ -30,15 +30,20 @@ class Loader {
     return `${this.baseLink}${endpoint}${params ? `?${params}` : ''}`;
   }
 
-  private load(method: HttpMethod, endpoint: string, callback: Callback, options: URLOptions = {}): void {
+  private load<T extends Data = Data>(
+    method: HttpMethod,
+    endpoint: string,
+    callback: Callback<T>,
+    options: URLOptions = {},
+  ): void {
     fetch(this.makeUrl(options, endpoint), { method })
       .then(this.errorHandler)
-      .then((res: Response): Promise<Data> => res.json())
+      .then((res: Response) => res.json() as Promise<Data>)
       .then((data: Data) => {
         if (data.status !== 'ok') {
           throw new Error(`API error: ${data.status}`);
         }
-        callback(data);
+        callback(data as T);
       })
       .catch((err: unknown) => {
         const errorMessage = err instanceof Error ? err.message : String(err);

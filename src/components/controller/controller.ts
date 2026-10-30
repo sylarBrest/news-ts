@@ -1,12 +1,12 @@
 import AppLoader from './appLoader';
-import type { Callback } from '../types/types';
+import type { Callback, OkNews, OkSources } from '../types/types';
 
 class AppController extends AppLoader {
-  public getSources(callback: Callback): void {
-    this.getResp({ endpoint: 'sources' }, callback);
+  public getSources(callback: Callback<OkSources>): void {
+    this.getResp<OkSources>({ endpoint: 'sources' }, callback);
   }
 
-  public getNews(e: Event, callback: Callback): void {
+  public getNews(e: Event, callback: Callback<OkNews>): void {
     let target: HTMLElement = <HTMLElement>e.target;
     const sourceContainer: HTMLElement = <HTMLElement>e.currentTarget;
 
@@ -17,7 +17,7 @@ class AppController extends AppLoader {
         if (sourceContainer.dataset.source === sourceId) return;
 
         sourceContainer.dataset.source = sourceId;
-        this.getResp(
+        this.getResp<OkNews>(
           {
             endpoint: 'everything',
             options: {
