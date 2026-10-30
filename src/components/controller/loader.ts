@@ -13,7 +13,7 @@ class Loader {
     this.load(HttpMethod.GET, endpoint, callback, options);
   }
 
-  private errorHandler = (res: Response): Response => {
+  private readonly errorHandler = (res: Response): Response => {
     if (!res.ok) {
       if (res.status === 401 || res.status === 404) {
         throw new Error(`Auth/not found: ${res.status} ${res.statusText}`);
@@ -26,9 +26,8 @@ class Loader {
 
   private makeUrl(queryOptions: URLOptions, endpoint: string): string {
     const params = new URLSearchParams({ ...this.options, ...queryOptions }).toString();
-    const url = `${this.baseLink}${endpoint}${params ? `?${params}` : ''}`;
 
-    return url;
+    return `${this.baseLink}${endpoint}${params ? `?${params}` : ''}`;
   }
 
   private load(method: HttpMethod, endpoint: string, callback: Callback, options: URLOptions = {}): void {
