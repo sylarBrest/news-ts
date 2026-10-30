@@ -1,59 +1,59 @@
 import type { Resp, Callback, URLOptions } from '../types/types';
 
 interface ILoader {
-    baseLink: string;
-    options: URLOptions;
-    getResp(options: Resp, callback: Callback): void;
-    errorHandler(res: Response): Response;
-    makeUrl(options: object, endpoint: string): string;
-    load(method: string, endpoint: string, callback: Callback, options: URLOptions): void;
+  baseLink: string;
+  options: URLOptions;
+  getResp(options: Resp, callback: Callback): void;
+  errorHandler(res: Response): Response;
+  makeUrl(options: object, endpoint: string): string;
+  load(method: string, endpoint: string, callback: Callback, options: URLOptions): void;
 }
 
 class Loader implements ILoader {
-    public baseLink: string;
-    public options: URLOptions;
-    constructor(baseLink: string, options: URLOptions) {
-        this.baseLink = baseLink;
-        this.options = options;
+  public baseLink: string;
+  public options: URLOptions;
+  constructor(baseLink: string, options: URLOptions) {
+    this.baseLink = baseLink;
+    this.options = options;
+  }
+
+  public getResp(
+    { endpoint, options = {} }: Resp,
+    callback: Callback = () => {
+      console.error('No callback for GET response');
+    },
+  ): void {
+    this.load('GET', endpoint, callback, options);
+  }
+
+  public errorHandler(res: Response): Response {
+    if (!res.ok) {
+      if (res.status === 401 || res.status === 404)
+        console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
+      throw Error(res.statusText);
     }
 
-    public getResp(
-        { endpoint, options = {} }: Resp,
-        callback: Callback = () => {
-            console.error('No callback for GET response');
-        }
-    ): void {
-        this.load('GET', endpoint, callback, options);
-    }
+    return res;
+  }
 
-    public errorHandler(res: Response): Response {
-        if (!res.ok) {
-            if (res.status === 401 || res.status === 404)
-                console.log(`Sorry, but there is ${res.status} error: ${res.statusText}`);
-            throw Error(res.statusText);
-        }
+  public makeUrl(options: object, endpoint: string): string {
+    const urlOptions: URLOptions = { ...this.options, ...options };
+    let url = `${this.baseLink}${endpoint}?`;
 
-        return res;
-    }
+    Object.keys(urlOptions).forEach((key: string) => {
+      url += `${key}=${urlOptions[key]}&`;
+    });
 
-    public makeUrl(options: object, endpoint: string): string {
-        const urlOptions: URLOptions = { ...this.options, ...options };
-        let url = `${this.baseLink}${endpoint}?`;
+    return url.slice(0, -1);
+  }
 
-        Object.keys(urlOptions).forEach((key: string) => {
-            url += `${key}=${urlOptions[key]}&`;
-        });
-
-        return url.slice(0, -1);
-    }
-
-    public load(method: string, endpoint: string, callback: Callback, options: URLOptions = {}): void {
-        fetch(this.makeUrl(options, endpoint), { method })
-            .then(this.errorHandler)
-            .then((res: Response) => res.json())
-            .then((data: string) => callback(data))
-            .catch((err: Error) => console.error(err));
-    }
+  public load(method: string, endpoint: string, callback: Callback, options: URLOptions = {}): void {
+    fetch(this.makeUrl(options, endpoint), { method })
+      .then(this.errorHandler)
+      .then((res: Response) => res.json())
+      .then((data: string) => callback(data))
+      .catch((err: Error) => console.error(err));
+  }
 }
 
 export default Loader;
