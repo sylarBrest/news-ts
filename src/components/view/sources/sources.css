@@ -37,6 +37,12 @@
     cursor: pointer;
 }
 
+@media screen and (max-width: 768px) {
+    .source__item {
+        padding: 5px;
+    }
+}
+
 .source__item:hover,
 .source__item:focus {
     border-color: #3fcc59;
